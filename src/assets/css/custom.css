@@ -24,6 +24,7 @@ header {
         0 8px 10px -6px rgba(99, 102, 241, 0.08),
         inset 0 1px 1px 0 rgba(255, 255, 255, 0.9);
 }
+
 .glass-panel {
     background: rgba(255, 255, 255, 0.45);
     backdrop-filter: blur(16px);
@@ -191,12 +192,14 @@ header {
 
 /* Susunan layout DataTables pada layar kecil */
 @media (max-width: 640px) {
+
     .dataTables_wrapper .dataTables_length,
     .dataTables_wrapper .dataTables_filter {
         text-align: left !important;
         float: none !important;
         margin-bottom: 0.5rem;
     }
+
     .dataTables_wrapper .dataTables_filter input {
         width: 100% !important;
         margin-left: 0 !important;
@@ -251,11 +254,74 @@ table.dataTable.no-footer {
 
 
 @keyframes modalShake {
-  0%, 100% { transform: scale(1); }
-  20%, 60% { transform: scale(1.02) translateX(-6px); }
-  40%, 80% { transform: scale(1.02) translateX(6px); }
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    20%,
+    60% {
+        transform: scale(1.02) translateX(-6px);
+    }
+
+    40%,
+    80% {
+        transform: scale(1.02) translateX(6px);
+    }
 }
 
 .animate-shake {
-  animation: modalShake 0.35s ease-in-out;
+    animation: modalShake 0.35s ease-in-out;
+}
+
+/*
+<!-- ========================================================= -->
+<!-- STYLES FOR PAGE LOADER -->
+<!-- ========================================================= -->
+*/
+
+/* Latar Belakang Loader */
+.animated-loader-bg {
+    background: rgba(241, 245, 249, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.dark .animated-loader-bg {
+    background: rgba(15, 23, 42, 0.90);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+/* Glassmorphism Card Loader */
+.loader-glass-card {
+    background: rgba(255, 255, 255, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.dark .loader-glass-card {
+    background: rgba(30, 41, 59, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Efek Kilatan / Shimmer pada Progress Bar */
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.shimmer-effect {
+    background: linear-gradient(90deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.4) 50%,
+            rgba(255, 255, 255, 0) 100%);
+    animation: shimmer 1.5s infinite;
 }

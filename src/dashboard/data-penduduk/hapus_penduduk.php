@@ -12,7 +12,7 @@ $row = $query->fetch_assoc();
     Apakah Anda yakin ingin menghapus data penduduk <span class="font-semibold text-indigo-600 dark:text-purple-400"><?= htmlspecialchars($row['nama']) ?></span>?
 </p>
 
-<form action="data_penduduk.php" method="POST" class="flex justify-center gap-3">
+<form action="setListPenduduk" method="POST" class="flex justify-center gap-3">
     <input type="hidden" name="action" value="delete">
     <input type="hidden" name="id" value="<?= $row['id'] ?>">
     <button type="button" onclick="closeCustomModal('#deletePendudukModal')" class="px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl border border-slate-300 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/5 text-xs sm:text-sm transition">Batal</button>

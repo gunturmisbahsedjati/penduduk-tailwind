@@ -13,7 +13,7 @@ $row = $query->fetch_assoc();
     </button>
 </div>
 
-<form action="data_penduduk.php" method="POST" class="space-y-3 sm:space-y-4">
+<form action="setListPenduduk" method="POST" class="space-y-3 sm:space-y-4">
     <input type="hidden" name="action" value="edit">
     <input type="hidden" name="id" value="<?= $row['id'] ?>">
 

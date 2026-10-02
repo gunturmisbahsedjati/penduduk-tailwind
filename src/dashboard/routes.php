@@ -13,8 +13,8 @@ switch ($opsi) {
     case 'listPenduduk':
         require_once(PUB_DIR . 'data-penduduk/data_penduduk.php');
         break;
-    case 'setRakorda':
-        require_once(PUB_DIR . 'modul/manajemen/rakorda/biodata-aksi.php');
+    case 'setListPenduduk':
+        require_once(PUB_DIR . 'data-penduduk/penduduk_aksi.php');
         break;
 
 

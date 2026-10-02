@@ -1,49 +1,6 @@
 <?php
 include 'config.php';
 
-// Handlers Aksi CRUD
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $action = $_POST['action'] ?? '';
-
-    if ($action === 'create') {
-        $nik = $conn->real_escape_string($_POST['nik']);
-        $nama = $conn->real_escape_string($_POST['nama']);
-        $jenis_kelamin = $conn->real_escape_string($_POST['jenis_kelamin']);
-        $tanggal_lahir = $conn->real_escape_string($_POST['tanggal_lahir']);
-        $alamat = $conn->real_escape_string($_POST['alamat']);
-        $pekerjaan = $conn->real_escape_string($_POST['pekerjaan']);
-
-        $conn->query("INSERT INTO penduduk (nik, nama, jenis_kelamin, tanggal_lahir, alamat, pekerjaan) 
-                      VALUES ('$nik', '$nama', '$jenis_kelamin', '$tanggal_lahir', '$alamat', '$pekerjaan')");
-        header("Location: index.php");
-        exit();
-    }
-
-    if ($action === 'edit') {
-        $id = (int)$_POST['id'];
-        $nik = $conn->real_escape_string($_POST['nik']);
-        $nama = $conn->real_escape_string($_POST['nama']);
-        $jenis_kelamin = $conn->real_escape_string($_POST['jenis_kelamin']);
-        $tanggal_lahir = $conn->real_escape_string($_POST['tanggal_lahir']);
-        $alamat = $conn->real_escape_string($_POST['alamat']);
-        $pekerjaan = $conn->real_escape_string($_POST['pekerjaan']);
-
-        $conn->query("UPDATE penduduk SET 
-                      nik='$nik', nama='$nama', jenis_kelamin='$jenis_kelamin', 
-                      tanggal_lahir='$tanggal_lahir', alamat='$alamat', pekerjaan='$pekerjaan' 
-                      WHERE id=$id");
-        header("Location: index.php");
-        exit();
-    }
-
-    if ($action === 'delete') {
-        $id = (int)$_POST['id'];
-        $conn->query("DELETE FROM penduduk WHERE id=$id");
-        header("Location: index.php");
-        exit();
-    }
-}
-
 // Data Penduduk
 $result = $conn->query("SELECT * FROM penduduk ORDER BY id DESC");
 
@@ -73,6 +30,7 @@ $total_perempuan = $q_perempuan ? $q_perempuan->fetch_assoc()['total'] : 0;
         <table id="pendudukTable" class="w-full text-left border-collapse text-xs sm:text-sm">
             <thead>
                 <tr class="table-header">
+                    <th class="p-3 sm:p-4 whitespace-nowrap">No.</th>
                     <th class="p-3 sm:p-4 whitespace-nowrap">NIK</th>
                     <th class="p-3 sm:p-4 whitespace-nowrap">Nama Lengkap</th>
                     <th class="p-3 sm:p-4 whitespace-nowrap">L/P</th>
@@ -83,9 +41,11 @@ $total_perempuan = $q_perempuan ? $q_perempuan->fetch_assoc()['total'] : 0;
                 </tr>
             </thead>
             <tbody class="divide-y divide-indigo-100/50 dark:divide-white/5">
-                <?php if ($result->num_rows > 0): ?>
-                    <?php while ($row = $result->fetch_assoc()): ?>
+                <?php $no = 1;
+                if ($result->num_rows > 0):
+                    while ($row = $result->fetch_assoc()): ?>
                         <tr class="table-row transition duration-200">
+                            <td class="p-3 sm:p-4 text-slate-600 dark:text-slate-300 whitespace-nowrap"><?= $no++ ?></td>
                             <td class="p-3 sm:p-4 font-semibold text-indigo-600 dark:text-purple-300 whitespace-nowrap"><?= htmlspecialchars($row['nik']) ?></td>
                             <td class="p-3 sm:p-4 font-medium whitespace-nowrap"><?= htmlspecialchars($row['nama']) ?></td>
                             <td class="p-3 sm:p-4 whitespace-nowrap">

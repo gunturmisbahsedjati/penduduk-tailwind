@@ -1,3 +1,110 @@
+/**
+ * Helper Floating Toast Notification
+ * @param {string} type - 'success', 'edit', atau 'delete' / 'error'
+ * @param {string} title - Judul notifikasi
+ * @param {string} message - Pesan ringkas
+ */
+function showToast(type, title, message) {
+    const toastContainer = $('#toastContainer');
+
+    // Konfigurasi Warna & Ikon berdasarkan Jenis Aksi
+    let config = {
+        icon: 'fa-check-circle',
+        iconBg: 'bg-emerald-500/10 text-emerald-500',
+        borderColor: 'border-l-4 border-l-emerald-500'
+    };
+
+    if (type === 'edit') {
+        config = {
+            icon: 'fa-pen-to-square',
+            iconBg: 'bg-amber-500/10 text-amber-500',
+            borderColor: 'border-l-4 border-l-amber-500'
+        };
+    } else if (type === 'delete' || type === 'error') {
+        config = {
+            icon: 'fa-trash-can',
+            iconBg: 'bg-rose-500/10 text-rose-500',
+            borderColor: 'border-l-4 border-l-rose-500'
+        };
+    }
+
+    // Template Elemen Toast
+    const toastId = 'toast-' + Date.now();
+    const toastHtml = `
+        <div id="${toastId}" class="pointer-events-auto toast-glass ${config.borderColor} p-4 rounded-2xl flex items-start gap-3 toast-enter transition-all duration-300">
+            <div class="w-9 h-9 rounded-xl ${config.iconBg} flex items-center justify-center shrink-0 text-base">
+                <i class="fa-solid ${config.icon}"></i>
+            </div>
+            <div class="flex-1 min-w-0 pt-0.5">
+                <h4 class="text-xs font-bold text-slate-800 dark:text-slate-100 leading-tight">${title}</h4>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-snug">${message}</p>
+            </div>
+            <button onclick="closeToast('${toastId}')" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition text-xs p-1">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    `;
+
+    // Sisipkan Toast Baru
+    toastContainer.append(toastHtml);
+
+    // Otomatis Hilang dalam 3.5 Detik
+    setTimeout(() => {
+        closeToast(toastId);
+    }, 3500);
+}
+
+// Fungsi Tutup Toast Manual / Otomatis
+function closeToast(id) {
+    const $toast = $('#' + id);
+    if ($toast.length) {
+        $toast.removeClass('toast-enter').addClass('toast-exit');
+        setTimeout(() => {
+            $toast.remove();
+        }, 300);
+    }
+}
+
+// =====================================
+// HANDLER SUBMIT FORM DENGAN AJAX TOAST
+// =====================================
+$(document).on('submit', '.ajax-form', function (e) {
+    e.preventDefault();
+    var $form = $(this);
+    var actionType = $form.find('input[name="action"]').val();
+
+    $.ajax({
+        url: $form.attr('action'),
+        type: 'POST',
+        data: $form.serialize(),
+        success: function (response) {
+            closeCustomModal();
+
+            if (actionType === 'create') {
+                showToast('success', 'Berhasil Ditambahkan', 'Data baru berhasil disimpan ke database.');
+            } else if (actionType === 'edit') {
+                showToast('edit', 'Berhasil Diperbarui', 'Perubahan data berhasil disimpan.');
+            } else if (actionType === 'delete') {
+                showToast('delete', 'Berhasil Dihapus', 'Data telah berhasil dihapus.');
+            }
+
+            // 2. Refresh SEMUA DataTables yang ada di halaman saat ini tanpa reload browser
+            if ($.fn.DataTable) {
+                $.fn.DataTable.tables({ visible: true, api: true }).ajax.reload(null, false);
+
+                // Jika tabel menggunakan render HTML biasa (Server-Side PHP include/routes),
+                // panggil fungsi reload konten halaman kamu (misal: loadRouteContent)
+                if (typeof loadCurrentPage === 'function') {
+                    loadCurrentPage();
+                }
+            }
+        },
+        error: function () {
+            showToast('error', 'Gagal Memproses', 'Terjadi kesalahan sistem.');
+        }
+    });
+});
+
 // =====================================
 // SIDEBAR MOBILE TOGGLE LOGIC
 // =====================================
@@ -231,5 +338,35 @@ $(document).ready(function () {
                 $modalDialog.removeClass('animate-shake');
             }, 350);
         }
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    let progress = 0;
+    const progressBar = document.getElementById("contentProgressBar");
+    const progressText = document.getElementById("contentProgressText");
+    const loader = document.getElementById("contentLoader");
+
+    const interval = setInterval(function () {
+        if (progress < 85) {
+            progress += Math.floor(Math.random() * 15) + 10;
+            if (progress > 85) progress = 85;
+
+            progressBar.style.width = progress + "%";
+            progressText.innerText = progress + "%";
+        }
+    }, 60);
+
+    window.addEventListener("load", function () {
+        clearInterval(interval);
+        progressBar.style.width = "100%";
+        progressText.innerText = "100%";
+
+        setTimeout(function () {
+            loader.classList.add("opacity-0", "pointer-events-none");
+            setTimeout(function () {
+                loader.style.display = "none";
+            }, 300);
+        }, 200);
     });
 });

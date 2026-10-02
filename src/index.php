@@ -1,3 +1,8 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
 
@@ -76,8 +81,36 @@
                 </button>
             </div>
         </header>
+        <main class="relative min-h-[400px] w-full flex-1">
 
-        <?php include_once 'dashboard/routes.php'; ?>
+            <!-- PROGRESS LOADER KHUSUS KONTEN -->
+            <div id="contentLoader" class="absolute inset-0 z-30 flex flex-col items-center justify-center animated-loader-bg rounded-2xl transition-opacity duration-300">
+                <div class="loader-glass-card p-6 sm:p-8 rounded-3xl flex flex-col items-center max-w-xs w-full shadow-xl relative overflow-hidden">
+                    <div class="relative mb-4">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white text-xl shadow-lg shadow-indigo-500/40 animate-bounce">
+                            <i class="fa-solid fa-spinner animate-spin"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-sm font-bold text-slate-800 dark:text-white mb-1">Memuat Konten...</h3>
+
+                    <!-- Progress Bar Track -->
+                    <div class="w-full bg-slate-200/60 dark:bg-slate-700/60 h-2 rounded-full overflow-hidden relative my-3">
+                        <div id="contentProgressBar" class="h-full rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 transition-all duration-150 ease-out w-0 overflow-hidden relative">
+                            <div class="shimmer-effect absolute inset-0"></div>
+                        </div>
+                    </div>
+
+                    <span id="contentProgressText" class="text-xs font-semibold text-slate-600 dark:text-slate-300">0%</span>
+                </div>
+            </div>
+
+            <!-- HASIL LOAD ROUTES.PHP -->
+            <div id="routesContent">
+                <?php include_once 'dashboard/routes.php'; ?>
+            </div>
+
+        </main>
+
 
         <!-- TABLE DATA SECTION -->
     </div>
@@ -85,9 +118,21 @@
     <!-- jQuery & DataTables JS CDN -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-
+    <?php include_once 'layout/toast.php'; ?>
     <!-- Custom JavaScript -->
     <script src="assets/js/custom.js?<?= time(); ?>"></script>
+    <?php if (isset($_SESSION['toast'])): ?>
+        <script>
+            $(document).ready(function() {
+                showToast(
+                    '<?= $_SESSION['toast']['type']; ?>',
+                    '<?= $_SESSION['toast']['title']; ?>',
+                    '<?= $_SESSION['toast']['message']; ?>'
+                );
+            });
+        </script>
+        <?php unset($_SESSION['toast']); ?>
+    <?php endif; ?>
 
 </body>
 
