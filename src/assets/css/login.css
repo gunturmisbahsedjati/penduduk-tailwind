@@ -1,0 +1,117 @@
+ /* ANIMASI GRADASI BACKGROUND UNGU KE BIRU */
+ @keyframes gradientAnimation {
+     0% {
+         background-position: 0% 50%;
+     }
+
+     50% {
+         background-position: 100% 50%;
+     }
+
+     100% {
+         background-position: 0% 50%;
+     }
+ }
+
+ .animated-gradient-bg {
+     /* Perpaduan warna gradasi ungu & biru (Light Mode) */
+     background: linear-gradient(-45deg, #4f46e5, #7c3aed, #2563eb, #3b82f6, #9333ea);
+     background-size: 400% 400%;
+     animation: gradientAnimation 12s ease infinite;
+ }
+
+ .dark .animated-gradient-bg {
+     /* Perpaduan warna gradasi ungu & biru yang lebih gelap (Dark Mode) */
+     background: linear-gradient(-45deg, #0f172a, #311042, #1e1b4b, #09203f, #1e1035);
+     background-size: 400% 400%;
+     animation: gradientAnimation 12s ease infinite;
+ }
+
+ /* CSS Glassmorphism Style */
+ .glass-panel {
+     background: rgba(255, 255, 255, 0.25);
+     backdrop-filter: blur(20px);
+     -webkit-backdrop-filter: blur(20px);
+     border: 1px solid rgba(255, 255, 255, 0.35);
+     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+ }
+
+ .dark .glass-panel {
+     background: rgba(15, 23, 42, 0.55);
+     border: 1px solid rgba(255, 255, 255, 0.12);
+     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+ }
+
+ .glass-input {
+     background: rgba(255, 255, 255, 0.5);
+     border: 1px solid rgba(255, 255, 255, 0.5);
+     transition: all 0.3s ease;
+ }
+
+ .glass-input:focus {
+     background: rgba(255, 255, 255, 0.85);
+     border-color: #6366f1;
+     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+     outline: none;
+ }
+
+ .dark .glass-input {
+     background: rgba(30, 41, 59, 0.6);
+     border: 1px solid rgba(255, 255, 255, 0.1);
+     color: #f8fafc;
+ }
+
+ .dark .glass-input:focus {
+     background: rgba(30, 41, 59, 0.9);
+     border-color: #818cf8;
+     box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.25);
+ }
+
+ .glass-btn {
+     background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);
+     color: #ffffff;
+     box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.4);
+ }
+
+ .glass-btn:hover {
+     opacity: 0.95;
+     transform: translateY(-1px);
+ }
+
+ /* Floating Theme Button Style */
+ .glass-float-btn {
+     background: rgba(255, 255, 255, 0.3);
+     backdrop-filter: blur(12px);
+     -webkit-backdrop-filter: blur(12px);
+     border: 1px solid rgba(255, 255, 255, 0.4);
+     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
+ }
+
+ .dark .glass-float-btn {
+     background: rgba(30, 41, 59, 0.5);
+     border: 1px solid rgba(255, 255, 255, 0.15);
+     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+ }
+
+ /* Animasi Bergetar (Shake) Jika Error */
+ @keyframes shake {
+
+     0%,
+     100% {
+         transform: translateX(0);
+     }
+
+     20%,
+     60% {
+         transform: translateX(-8px);
+     }
+
+     40%,
+     80% {
+         transform: translateX(8px);
+     }
+ }
+
+ .animate-shake {
+     animation: shake 0.35s ease-in-out;
+ }

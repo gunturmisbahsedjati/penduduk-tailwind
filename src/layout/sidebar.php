@@ -15,4 +15,8 @@ $current_page = $_GET['do'] ?? 'home';
         <i class="fa-solid fa-address-card text-base"></i>
         <span>Data Penduduk</span>
     </a>
+    <a href="listPengguna" class="sidebar-item <?= ($current_page === 'listPengguna') ? 'active' : '' ?> flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition duration-300">
+        <i class="fa-solid fa-users text-base"></i>
+        <span>Data Pengguna</span>
+    </a>
 </nav>

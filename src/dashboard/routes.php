@@ -9,12 +9,18 @@ switch ($opsi) {
         require_once(PUB_DIR . 'home.php');
         break;
 
-    //sementara
+
     case 'listPenduduk':
         require_once(PUB_DIR . 'data-penduduk/data_penduduk.php');
         break;
     case 'setListPenduduk':
         require_once(PUB_DIR . 'data-penduduk/penduduk_aksi.php');
+        break;
+    case 'listPengguna':
+        require_once(PUB_DIR . 'data-pengguna/data_pengguna.php');
+        break;
+    case 'setListPengguna':
+        require_once(PUB_DIR . 'data-pengguna/pengguna_aksi.php');
         break;
 
 

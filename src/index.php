@@ -93,7 +93,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     </div>
                     <h3 class="text-sm font-bold text-slate-800 dark:text-white mb-1">Memuat Konten...</h3>
 
-                    <!-- Progress Bar Track -->
+
                     <div class="w-full bg-slate-200/60 dark:bg-slate-700/60 h-2 rounded-full overflow-hidden relative my-3">
                         <div id="contentProgressBar" class="h-full rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 transition-all duration-150 ease-out w-0 overflow-hidden relative">
                             <div class="shimmer-effect absolute inset-0"></div>
