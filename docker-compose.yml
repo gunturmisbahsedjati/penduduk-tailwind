@@ -4,7 +4,7 @@ services:
   web:
     build: .
     ports:
-      - "8080:80"
+      - "7675:80"
     volumes:
       - ./src:/var/www/html
     depends_on:
@@ -35,7 +35,7 @@ services:
     container_name: phpmyadmin_panel
     restart: always
     ports:
-      - "8001:80" # Akses phpMyAdmin di browser via http://localhost:8001
+      - "7676:80" # Akses phpMyAdmin di browser via http://localhost:8001
     environment:
       PMA_HOST: db # Menghubungkan phpMyAdmin ke service "db" di atas
       PMA_PORT: 3306
